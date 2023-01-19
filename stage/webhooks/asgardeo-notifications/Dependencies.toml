@@ -325,15 +325,6 @@ dependencies = [
 
 [[package]]
 org = "ballerinax"
-name = "client.config"
-version = "1.0.1"
-dependencies = [
-	{org = "ballerina", name = "http"},
-	{org = "ballerina", name = "oauth2"}
-]
-
-[[package]]
-org = "ballerinax"
 name = "trigger.asgardeo"
 version = "0.4.0"
 dependencies = [
@@ -350,23 +341,6 @@ modules = [
 ]
 
 [[package]]
-org = "ballerinax"
-name = "twilio"
-version = "3.1.0"
-dependencies = [
-	{org = "ballerina", name = "auth"},
-	{org = "ballerina", name = "http"},
-	{org = "ballerina", name = "log"},
-	{org = "ballerina", name = "mime"},
-	{org = "ballerina", name = "os"},
-	{org = "ballerina", name = "url"},
-	{org = "ballerinax", name = "client.config"}
-]
-modules = [
-	{org = "ballerinax", packageName = "twilio", moduleName = "twilio"}
-]
-
-[[package]]
 org = "wenod"
 name = "asgardeo_notifications"
 version = "0.1.0"
@@ -375,10 +349,23 @@ dependencies = [
 	{org = "ballerina", name = "log"},
 	{org = "ballerinai", name = "observe"},
 	{org = "ballerinax", name = "trigger.asgardeo"},
-	{org = "ballerinax", name = "twilio"}
+	{org = "wso2", name = "choreo.sendsms"}
 ]
 modules = [
 	{org = "wenod", packageName = "asgardeo_notifications", moduleName = "asgardeo_notifications"}
+]
+
+[[package]]
+org = "wso2"
+name = "choreo.sendsms"
+version = "0.5.1"
+dependencies = [
+	{org = "ballerina", name = "http"},
+	{org = "ballerina", name = "log"},
+	{org = "ballerinai", name = "observe"}
+]
+modules = [
+	{org = "wso2", packageName = "choreo.sendsms", moduleName = "choreo.sendsms"}
 ]
 
 

@@ -1,12 +1,9 @@
-import ballerinax/twilio;
+import wso2/choreo.sendsms;
 import ballerinax/trigger.asgardeo;
 import ballerina/http;
 import ballerina/log;
 
 configurable asgardeo:ListenerConfig config = ?;
-configurable string sid = ?;
-configurable string token = ?;
-configurable string fromMobile = ?;
 
 listener http:Listener httpListener = new(8090);
 listener asgardeo:Listener webhookListener =  new(config,httpListener);
@@ -24,15 +21,11 @@ service asgardeo:NotificationService on webhookListener {
         string message = <string> check eventData.toJson().messageBody;
 
         //Configure twilio account.
-        twilio:Client twilioClient = check new (config = {
-            twilioAuth: {
-                accountSId: sid,
-                authToken: token
-            }
-        });
+        sendsms:Client sendSmsClient = check new ();
 
-        twilio:SmsResponse response = check twilioClient -> sendSms(fromMobile, toNumber, message);
-        log:printInfo("SMS_SID: " + response.sid.toString() + ", Body: " + response.body.toString());
+        string response = check sendSmsClient -> sendSms(toNumber, message);
+
+        log:printInfo(response);
     }
 }
 
