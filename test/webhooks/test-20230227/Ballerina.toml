@@ -1,0 +1,9 @@
+[build-options]
+  observabilityIncluded = true
+
+[package]
+  distribution = "2201.3.1"
+  name = "notification_webhook_test_20230301"
+  org = "wenod"
+  version = "0.1.0"
+
