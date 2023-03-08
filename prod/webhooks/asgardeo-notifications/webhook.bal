@@ -23,7 +23,11 @@ service asgardeo:NotificationService on webhookListener {
         //Configure twilio account.
         sendsms:Client sendSmsClient = check new ();
 
-        string response = check sendSmsClient -> sendSms(toNumber, message);
+        string|error response = sendSmsClient -> sendSms(toNumber, message);
+
+        if response is error {
+            return response;
+        }
 
         log:printInfo(response);
     }
