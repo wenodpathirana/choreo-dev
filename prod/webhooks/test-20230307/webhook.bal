@@ -1,5 +1,7 @@
+import wso2/choreo.sendsms;
 import ballerinax/trigger.asgardeo;
 import ballerina/http;
+import ballerina/log;
 
 configurable asgardeo:ListenerConfig config = ?;
 
@@ -9,7 +11,25 @@ listener asgardeo:Listener webhookListener =  new(config,httpListener);
 service asgardeo:NotificationService on webhookListener {
   
     remote function onSmsOtp(asgardeo:SmsOtpNotificationEvent event ) returns error? {
-      //Not Implemented
+        
+        //logging the event.
+        log:printInfo(event.toJsonString());
+
+        //read data from the event.
+        asgardeo:SmsOtpNotificationData? eventData = event.eventData;
+        string toNumber = <string> check eventData.toJson().sendTo;
+        string message = <string> check eventData.toJson().messageBody;
+
+        //Configure twilio account.
+        sendsms:Client sendSmsClient = check new ();
+
+        string|error response = sendSmsClient -> sendSms(toNumber, message);
+
+        if response is error {
+            return response;
+        }
+
+        log:printInfo(response);
     }
 }
 
